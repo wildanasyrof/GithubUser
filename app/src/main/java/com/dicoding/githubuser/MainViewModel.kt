@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.githubuser.api.ItemsItem
-import com.dicoding.githubuser.api.UserResponse
+import com.dicoding.githubuser.api.response.ItemsItem
+import com.dicoding.githubuser.api.response.UserResponse
 import com.dicoding.githubuser.api.response.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,7 +50,7 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun getSearchUser(name: String) {
+     fun getSearchUser(name: String) {
         _isLoading.value = true
 
         val client = ApiConfig.getApiService().getUser(name)

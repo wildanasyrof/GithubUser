@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.githubuser.api.ItemsItem
+import com.dicoding.githubuser.api.response.ItemsItem
 import com.dicoding.githubuser.databinding.ItemUserBinding
 
 class UserAdapter(private val listUser: ArrayList<ItemsItem>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
@@ -23,6 +23,7 @@ class UserAdapter(private val listUser: ArrayList<ItemsItem>) : RecyclerView.Ada
         Glide
             .with(holder.itemView.context)
             .load(data.avatarUrl)
+            .circleCrop()
             .into(holder.binding.itemPhoto)
         holder.binding.tvName.text = data.login
 

@@ -18,27 +18,29 @@ class DetailUserViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getDataUser(username: String) {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getDetailUser(username)
-        client.enqueue(object: Callback<DetailUserResponse> {
-            override fun onResponse(
-                call: Call<DetailUserResponse>,
-                response: Response<DetailUserResponse>
-            ) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _dataUser.value = response.body()
-                    Log.d("TAG", "onResponse: ${response.body()}")
-                } else {
-                    Log.e("TAG", "onFailureResponse: ${response.message()}")
-                }
-            }
+     fun getDataUser(username: String) {
+         if (dataUser.value == null) {
+             _isLoading.value = true
+             val client = ApiConfig.getApiService().getDetailUser(username)
+             client.enqueue(object: Callback<DetailUserResponse> {
+                 override fun onResponse(
+                     call: Call<DetailUserResponse>,
+                     response: Response<DetailUserResponse>
+                 ) {
+                     _isLoading.value = false
+                     if (response.isSuccessful) {
+                         _dataUser.value = response.body()
+                         Log.d("TAG", "onResponse: ${response.body()}")
+                     } else {
+                         Log.e("TAG", "onFailureResponse: ${response.message()}")
+                     }
+                 }
 
-            override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e("TAG", "onFailure: ${t.message}")
-            }
-        })
+                 override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
+                     _isLoading.value = false
+                     Log.e("TAG", "onFailure: ${t.message}")
+                 }
+             })
+         }
     }
 }

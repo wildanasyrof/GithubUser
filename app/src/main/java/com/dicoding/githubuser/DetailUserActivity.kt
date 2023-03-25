@@ -3,7 +3,6 @@ package com.dicoding.githubuser
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -49,6 +48,7 @@ class DetailUserActivity : AppCompatActivity() {
             Glide
                 .with(this)
                 .load(dataUser.avatarUrl)
+                .circleCrop()
                 .into(binding.ivDetailUser)
 
             binding.tvDetailUserName.text = dataUser.name

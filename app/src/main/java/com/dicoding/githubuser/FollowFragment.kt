@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.githubuser.databinding.FragmentFollowBinding
 
@@ -21,7 +20,6 @@ class FollowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFollowBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -35,13 +33,18 @@ class FollowFragment : Fragment() {
 
         if (position == 1) {
             followViewModel.getFollowersUser(username)
+
+            followViewModel.listFollowersUser.observe(viewLifecycleOwner) {listUser ->
+                val adapter = FollowAdapter(listUser)
+                binding.rvFollow.adapter = adapter
+            }
         } else {
             followViewModel.getFollowingUser(username)
-        }
 
-        followViewModel.listFollowersUser.observe(viewLifecycleOwner) {listUser ->
-            val adapter = FollowAdapter(listUser)
-            binding.rvFollow.adapter = adapter
+            followViewModel.listFollowingUser.observe(viewLifecycleOwner) {listUser ->
+                val adapter = FollowAdapter(listUser)
+                binding.rvFollow.adapter = adapter
+            }
         }
 
         followViewModel.isLoading.observe(viewLifecycleOwner) {
@@ -52,8 +55,7 @@ class FollowFragment : Fragment() {
     private fun recyclerViewSetting() {
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvFollow.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
-        binding.rvFollow.addItemDecoration(itemDecoration)
+        binding.rvFollow.setHasFixedSize(true)
     }
 
     private fun showLoading(isLoading: Boolean) {

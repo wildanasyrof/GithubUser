@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.githubuser.api.ItemsItem
+import com.dicoding.githubuser.api.response.ItemsItem
 import com.dicoding.githubuser.databinding.ItemUserBinding
 
 class FollowAdapter(private val listUser: List<ItemsItem>) : RecyclerView.Adapter<FollowAdapter.ViewHolder>() {
@@ -23,7 +23,8 @@ class FollowAdapter(private val listUser: List<ItemsItem>) : RecyclerView.Adapte
         Glide
             .with(holder.itemView.context)
             .load(data.avatarUrl)
+            .circleCrop()
             .into(holder.binding.itemPhoto)
         holder.binding.tvName.text = data.login
-        }
+    }
 }
